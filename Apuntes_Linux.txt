@@ -1,0 +1,11 @@
+Descarga de Videos desde Consola
+================================
+youtube-dl <dirección web>
+
+
+Convertir PDF en Libro para imprimir
+====================================
+pdf2ps manual.pdf - | psbook | psnup -pa4 -2 | ps2pdf - manual_libro_a5.pdf
+
+
+
