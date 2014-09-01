@@ -1,11 +1,22 @@
 Descarga de Videos desde Consola
 ================================
-youtube-dl <dirección web>
+	youtube-dl -F <dirección web> ---> lista formatos y calidad de video a descargas
+
 
 
 Convertir PDF en Libro para imprimir
 ====================================
-pdf2ps manual.pdf - | psbook | psnup -pa4 -2 | ps2pdf - manual_libro_a5.pdf
+	pdf2ps manual.pdf - | psbook | psnup -pa4 -2 | ps2pdf - manual_libro_a5.pdf
+
+
+Trabajos de Memoria en Linux
+============================
+
+Ver memoria disponible 
+	free -m
+
+Libera Memoria 
+	sudo sync && sudo sysctl -w vm.drop_caches=3
 
 
 
