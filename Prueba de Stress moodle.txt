@@ -1,0 +1,11 @@
+Poner Moodle en modo depuracion
+===============================
+
+	1. ingresar a moodle
+	2. Administracion de sitio -> Depurado -> Mensajes de depuracion -> elejir la oopcion de DESARROLLO
+
+	3. Agregar en la archivo config.php de moodle
+			$CFG->tool_generator_users_password = 'imatest';
+	4. crear la prueba  en opcion de desarrollo->Make JMeter test plan
+			
+

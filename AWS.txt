@@ -1,0 +1,117 @@
+Activar root de AMI Linux
+=========================
+	EDITAMOS EL FICHERO DE CONFIGURACIÓN DE SSH
+
+		sudo vim /etc/ssh/sshd_config
+
+	y cambiamos los valores por los que adjunto
+
+	PermitRootLogin yes PasswordAuthentication yes
+
+		PermitRootLogin yes
+		PasswordAuthentication yes
+
+	RECARGAMOS LA CONFIGURACIÓN SSH
+
+	sudo service sshd reload
+
+	CAMBIAMOS LA CONTRASEÑA AL USUARIO ROOT
+
+		sudo passwd root
+	
+
+
+
+Ver tamaño de carpeta
+=====================
+
+	du --max-depth=1 -h /ruta/
+
+	du -h --max-depth=1 /home/ruta/ | sort -n -r
+
+Formate de unidad
+==================
+
+	mkfs.xfs /dev/xvdg
+
+
+Procedimientos para montar unidad
+=================================
+
+	Crear una carpeta: mkdir mi_carpeta
+	mount -t xfs /dev/xvdg /mi_carpeta
+
+	nota: xfs tipo de formato de participacion
+
+
+Ver lista de usuarios
+=====================
+
+cat /etc/passwd | cut -d":" -f1
+
+
+Mover Archivos entre servisores por FTP
+=======================================
+
+	SUBIR DE UN SERVIDOR AL FTP
+	destino en el ftp        origen en tu server
+	ncftpput -R -u infraestructura -p IcQ6R70wguHdDiC ftp.e3.pe /PlataformaDigital/bkp/ /apps/neoauto/2.neoauto.pe.tar.gz
+
+	BAJAR DEL FTP A UN SERVIDOR
+	destino en tu server origen en el ftp
+	ncftpget -R -u infraestructura -p IcQ6R70wguHdDiC ftp.e3.pe  /apps/neoauto/   /PlataformaDigital/bkp/2.neoauto.pe.tar.gz
+
+
+Despliegue de Ambiente a Produccion
+===================================
+	Acceder a web58 
+	Cambiar a usuario: su - websync 
+	revisar el bash
+		vim /usr/local/scripts/unt.sh  --> revisar el ambiente a desplegar
+		vim /usr/local/scripts/unt.sh aptitus.pe
+
+Activar COnsumidores 
+====================
+	En ese caso de urbania
+	Ingresamos ala web27
+		Revisamos el supervisor despues revisamos los scripts si estan en el supervisor ademas que existan en las rutas designadas
+
+
+
+Copiar archivos por SCP
+======================
+
+scp -i $HOME/llaves/aws.pem root@184.72.135.173:/root/ini.web01.tar.gz
+
+./U web27 /tmp/llavez.zip  /tmp/
+
+
+scp -i $HOME/aws.pem root@184.72.135.173:/apps/aptitus/pre.4.aptitus.tar.gz
+
+
+Ejecucion de Cron
+==================
+
+	/usr/local/zend/bin/php /apps/urbania/pre.3.urbania.pe/src/public/index.php cron sitemap ubigeo 1
+
+	/usr/local/zend/bin/php /apps/urbania/pre.3.urbania.pe/src/public/index.php cron sitemap buscador 16
+
+
+
+Uso de Screen
+=============
+	Crear un screen
+		screen -S nombre_cron
+	Listar Screen
+		scren -ls
+	Recuperar
+		screen -R nombre_cron
+
+	Uso de screen
+		/usr/local/zend/bin/php /apps/urbania/pre.3.urbania.pe/src/public/index.php cron sitemap buscador 16 > buscador.txt -->'guarda todo lo realizado en el comando'
+
+Amplir rando de peticiones
+--------------------------
+
+	ulimit -n 2000 open files ulimit -a
+	Modificar la configuracion de PHP.INI 

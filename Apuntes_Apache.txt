@@ -1,0 +1,19 @@
+Verificar Configuracion
+=======================
+	httpd -t
+
+Version del Apache
+==================
+	httpd -v
+
+Ver Modulos
+===========
+	httpd -l
+
+Modulos cargados en Apache
+=========================
+	httpd -M
+
+Host Virtuales en tu apache
+===========================
+	httpd -S

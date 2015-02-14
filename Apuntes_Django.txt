@@ -1,0 +1,33 @@
+crear un carpeta como raiz
+Crear  entorno virtual 
+======================
+		> pip install virtualenv
+	Crear ambiente 
+		> virtualenv --no-site-packages AMBIENTE-NAME
+		Esperar proceso de instalacion 
+	Activar entorno Virtual 
+		> source AMBIENTE-NAME/bin/activate 
+
+Instalacion de DJANGO
+=====================
+	> pip install django
+Verifiacion de Instalacion 
+	> python
+	>>> from django import get_version
+	>>>  get_version()
+	'1.5.1'
+	>>>
+
+Crear proyecto en Django
+========================
+	> django-admin.py startproject NAME
+
+Iniciar el Servidor
+==================
+	> python manage.py runserver
+
+
+Salir de Entorno Virtual 
+========================
+	> deactivate
+

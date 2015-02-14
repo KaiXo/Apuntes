@@ -1,0 +1,101 @@
+Configureacion de GIT
+=====================
+	Configuracion de Usuario
+		git config --global user.name "David E. Cruz Herrada"
+	Configuracion de Mail
+		git config --global user.email "dacruz132@gmail.com"
+
+	Ver configuracion de GIT
+		git config --list
+
+Iniciar Repositorio
+==================
+	git init
+
+Agregar Archivos
+================
+git add Archivo1.txt # colocamos el archivo en escenario
+
+git add -A -> agrega todo los archivos
+
+Consolidar Informacion
+======================
+git commit -m "Commit Inicial"
+
+
+
+Creacion de LLave SSH
+=====================
+
+	ssh-keygen -t rsa -C "tucorreo@tu.com"
+	Añades la llave ssh.pub a GITHUB
+
+Probando Conexion
+=================
+	ssh -T git@github.com
+
+
+
+Fusion de ramas
+===============
+	1. Moverser a la rama principal
+			git checkout master
+	2. Fusionar la rama que se desea
+			git merge tu_rama
+
+	Nota: recordar que las fusiones  tenemos 2 tipos
+			- Fast-Forward -> fusionado rapido cuando los cambios  han sido en archivos diferentes que al de la rama principal
+			- Manual Merge -> Fusionado paso a paso, generalmente cuando los cambios se  han realizado en el mismo archivo y mismas linea de codigo. La decision de que cambio sera el tomado de cada rama. HEAD -> es la rama principal
+
+
+
+	Check de ramas fusionadas
+	=========================
+		git branch --merged
+
+
+Borrar Una Rama
+================
+	git branch -d nombre_de_la_rama
+
+
+Conexion con Repositorio Remoto
+===============================
+
+	git remoto add origin  http://Ruta_de_tu_Servidor
+
+Ver conexion de Repositorios
+============================
+
+	origin http://ruta_de_tu_repositorio (fetch)
+	origin http://ruta_de_tu_repositorio (push)
+
+Sincronicacion de Repositorios  local a remoto
+==================================================================
+
+		git push origin master
+		donde "master" es la rama principal del proyecto
+
+
+Sincronicacion de Remoto Local
+==============================
+
+	Esto sincronica un cambio realizado en tu repositorio remoto  a tu repo local origin/master
+	git fetch origin
+
+	Sincronicar la rama - ademas hace un push al servidor remoto o rama remota
+		git  merger origin/master
+		git push origin master
+
+Ver rama oculta de remoto en tu PC
+==================================
+	git branch -a
+
+
+Seguimiento de Ramas en Git
+===========================
+	git log --pretty=format:"%h - %an - %ar - %s" --graph
+
+
+
+git reset --hard HEAD 

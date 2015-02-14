@@ -1,0 +1,238 @@
+Configuracion de Proxy Reverso Basico
+=====================================
+			upstream apachephp  {
+				server 192.168.1.11:80;
+			}
+
+			server {
+					listen       202.54.1.1:80;
+					server_name  www.dominio.com;
+					access_log  /var/log/nginx/log/www.dominio.access.log  main;
+					error_log  /var/log/nginx/log/www.dominio.error.log;
+					root   /usr/share/nginx/html;
+					index  index.html index.htm;
+					## mandamos la petición a apache ##
+				location / {
+							roxy_pass  http://apachephp;
+							proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+							proxy_redirect off;
+							proxy_buffering off;
+							proxy_set_header        Host              $host;
+							proxy_set_header        X-Real-IP         $remote_addr;
+							proxy_set_header        X-Forwarded-For   $proxy_add_x_forwarded_for;
+				}
+			}
+
+
+
+Configuracion basica wordpress
+===============================
+
+	### tusitioweb.com
+	server {
+		access_log off;
+		error_log logs/tusitioweb.com-error_log warn;
+
+		listen 80;
+		server_name tusitioweb.com www.tusitioweb.com;
+
+		location ~* \.(gif|jpg|jpeg|png|ico|wmv|3gp|avi|mpg|mpeg|mp4|flv|mp3|mid|js|css|wml|swf)$ {
+		root /ruta/al/sitio/tusitioweb.com;
+		expires max;
+		add_header Pragma public;
+		add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+	}
+
+	location / {
+		root /ruta/al/sitio/tusitioweb.com;
+		index index.php index.html index.htm;
+
+		# Rewrite rules de WordPress
+		try_files $uri $uri/ /index.php?$args;
+	}
+
+	# Pasamos todo PHP a PHP-FPM
+	location ~ \.php$ {
+		root /ruta/al/sitio/tusitioweb.com;
+		try_files $uri =404;
+		fastcgi_pass unix:/tmp/php5-fpm.sock;
+		fastcgi_index index.php;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		include fastcgi_params;
+		}
+	}
+
+
+General Tuning
+===============
+
+	nginx uses a fixed number of workers, each of which handles incoming requests. The general rule of thumb is that you should have one worker for each CPU-core your server contains.
+
+	You can count the CPUs available to your system by running:
+
+	$ grep ^processor /proc/cpuinfo | wc -l
+
+	With a quad-core processor this would give you a configuration that started like so:
+
+	# One worker per CPU-core.
+	worker_processes  4;
+
+	events {
+			worker_connections  8096;
+			multi_accept        on;
+			use                 epoll;
+	}
+
+	worker_rlimit_nofile 40000;
+
+	http {
+			sendfile           on;
+			tcp_nopush         on;
+			tcp_nodelay        on;
+			keepalive_timeout  15;
+
+			# Your content here ..
+	}
+
+	Here we've also raised the worker_connections setting, which specifies how many connections each worker process can handle.
+
+	The maximum number of connections your server can process is the result of:
+
+			worker_processes * worker_connections (= 32384 in our example).
+
+
+
+
+
+
+
+Compression
+===========
+
+	One of the first things that many people try to do is to enable the gzip compression module available with nginx. The intention here is that the objects which the server sends to requesting clients will be smaller, and thus faster to send.
+
+	However this involves the trade-off common to tuning, performing the compression takes CPU resources from your server, which frequently means that you'd be better off not enabling it at all.
+
+	Generally the best approach with compression is to only enable it for large files, and to avoid compressing things that are unlikely to be reduced in size (such as images, executables, and similar binary files).
+
+	With that in mind the following is a sensible configuration:
+
+	gzip  on;
+	gzip_vary on;
+	gzip_min_length 10240;
+	gzip_proxied expired no-cache no-store private auth;
+	gzip_types text/plain text/css text/xml text/javascript application/x-javascript application/xml;
+	gzip_disable "MSIE [1-6]\.";
+
+
+
+Client Caching
+==============
+
+	A simple way of avoiding your server handling requests is if remote clients believe their content is already up-to-date.
+
+	To do this you want to set suitable cache-friendly headers, and a simple way of doing that is to declare that all images, etc, are fixed for a given period of time:
+
+	     location ~* \.(jpg|jpeg|gif|png|css|js|ico|xml)$ {
+	         access_log        off;
+	         log_not_found     off;
+	         expires           30d;
+	     }
+
+
+Filehandle Cache
+
+	If you're serving a large number of static files you'll benefit from keeping filehandles to requested files open - this avoids the need to reopen them in the future.
+
+	        NOTE: You should only run with this enabled if you're not editing the files at the time you're serving them. Because file accesses are cached any 404s will be cached too, similarly file-sizes will be cached, and if you change them your served content will be out of date.
+
+	The following is a good example, which can be placed in either the server section of your nginx config, or within the main http block:
+
+	open_file_cache          max=2000 inactive=20s;
+	open_file_cache_valid    60s;
+	open_file_cache_min_uses 5;
+	open_file_cache_errors   off;
+
+
+
+Tuning for PHP
+
+	Many sites involve the use of PHP, for example any site built around wordpress.
+
+	As there is no native mod_php for nginx the recommended way to run PHP applications involves the use of PHP-FPM. To use PHP-FPM you essentially proxy requests for PHP files as follows:
+
+					# execute all .php files via php-fpm
+					location ~ .php$ {
+					# connect to a unix domain-socket:
+						fastcgi_pass   unix:/var/run/php5-fpm.sock;
+						fastcgi_index  index.php;
+						fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+						fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+						fastcgi_buffer_size 128k;
+						fastcgi_buffers 256 16k;
+						fastcgi_busy_buffers_size 256k;
+						fastcgi_temp_file_write_size 256k;
+
+							This file is present on Debian systems..
+								include fastcgi_params;
+					}
+
+	Notice that this uses a Unix domain-socket to connect to FPM, so you need to ensure that you change /etc/php5/fpm/pool.d/www.conf to read:
+
+	listen = /var/run/php5-fpm.sock
+
+	This ensures that FPM will listen on a domain socket, rather than the default of listening on a network-socket (the default is "listen=127.0.0.1:9000").
+
+	By default PHP-FPM will start a number of dedicated workers, each running an instance of PHP. If you're not swamped for memory you can increase the number of workers to increase concurrent-throughput.
+
+	Edit the file /etc/php5/fpm/pool.d/www.conf to change the number of children:
+
+	; set a fixed number of php workers
+	pm = static
+
+	; start up 12 php processes
+	pm.max_children = 12
+
+	This is an example setting, of the kind we mention in the considerations section - the value of 12 is just an example, which you will need to test under-load to see if it is reasonable for your particular setup.
+
+	Finally you can configure PHP-FPM to restart automatically, if there are problems. In this example we restart if ten child processes die within 1 minute, and we allow 10 seconds to pass before that happens.
+
+	This is a global configuration and belongs in /etc/php5/fpm/php-fpm.conf:
+
+	emergency_restart_threshold 10
+	emergency_restart_interval 1m
+	process_control_timeout 10s
+
+
+
+Add config NGINX
+================
+
+	worker_processes  auto;
+	worker_rlimit_nofile 100000;
+	events {
+	    use epoll;
+	    worker_connections 1024;
+	    multi_accept on
+	}
+	http {
+	    include       /etc/nginx/mime.types;
+	    default_type  application/octet-stream;
+	    access_log off;
+	    keepalive_timeout  65;
+	    keepalive_requests 200;
+	    reset_timedout_connection on;
+	    sendfile on;
+	    tcp_nopush on;
+	    gzip on;
+	    gzip_min_length 256;
+	    gzip_comp_level 3;
+	    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+	    open_file_cache max=10000 inactive=30s;
+	    open_file_cache_valid    60s;
+	    open_file_cache_min_uses 2;
+	    open_file_cache_errors   on;
+	}
+
+
+

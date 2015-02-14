@@ -1,0 +1,53 @@
+Ingreso a Mongo Local
+=====================
+	mongo 127.0.0.1:27017/admin -u usr_admin_mdb -pC0mercio1
+
+
+
+	mongo.host = "bdr08.orbis.pe"
+mongo.database = "mdb_neoauto2_pre"
+mongo.username = "usr_neoauto2_pre"
+mongo.password = "rie5raeshi9xxDa"
+
+
+mongo 127.0.0.1:27017/mdb_neoauto2_pre -u usr_neoauto2_pre -p rie5raeshi9xxDa
+
+bdr08.orbis.pe
+
+mongo bdr08.orbis.pe:27017/mdb_neoauto2_pre -u usr_neoauto2_pre -p rie5raeshi9xxDa
+
+54.82.160.40 
+
+mongo 54.82.160.40:27017/mdb_neoauto2_pre -u usr_neoauto2_pre -p rie5raeshi9xxDa
+
+
+
+consulta SQl dar acceso a tablas de  una base de datos
+
+GRANT SELECT ON houseonline.hol_ordenpublicaciondetalle TO 'usr_hol_ext'@'%' IDENTIFIED BY 'Xah1acah7AZiyi'; 
+GRANT SELECT ON houseonline.hol_tipotransaccion TO 'usr_hol_ext'@'%';
+GRANT SELECT ON houseonline.hol_tipoinmueble TO 'usr_hol_ext'@'%';
+GRANT SELECT ON houseonline.hol_ordenpublicacion TO 'usr_hol_ext'@'%';
+GRANT SELECT ON houseonline.hol_tipoaviso TO 'usr_hol_ext'@'%';
+GRANT SELECT ON houseonline.usuarios TO 'usr_hol_ext'@'%';
+GRANT SELECT ON houseonline.hol_paqueteavisoimpreso TO 'usr_hol_ext'@'%';
+GRANT SELECT ON houseonline.hol_paquete  TO 'usr_hol_ext'@'%';
+GRANT SELECT ON houseonline.hol_tipopaquete  TO 'usr_hol_ext'@'%';
+GRANT SELECT ON houseonline.hol_paqueteaviso TO 'usr_hol_ext'@'%';
+GRANT SELECT ON houseonline.hol_paquete TO 'usr_hol_ext'@'%';
+GRANT SELECT ON houseonline.hol_perfilagente TO 'usr_hol_ext'@'%';
+GRANT SELECT ON houseonline.hol_tipopaquete  TO 'usr_hol_ext'@'%';
+
+
+
+
+
+
+
+
+
+
+
+
+
+

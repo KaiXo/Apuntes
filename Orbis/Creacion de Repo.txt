@@ -1,0 +1,133 @@
+################################################################################################
+Creacion de Ramas
+################################################################################################
+Ingresar a la web58
+	su - websync
+		cd /var/stage/
+			cd aptitus/  ir a la carpeta donde se va a clonar la rama - clonacion del repositorio aptitus2
+
+Clonacion de rama
+-----------------
+	git clone git@git.ec.pe:aptitus2.git  dev.4.aptitus.com -o origen
+
+	[websync@web58 aptitus]$ git clone git@git.ec.pe:aptitus2.git  dev.4.aptitus.com -o origen
+		cd dev.4.aptitus.com/
+
+	[websync@web58 aptitus]$ git remote show origen
+
+	* remote origen
+	  Fetch URL: git@git.ec.pe:aptitus2.git
+	  Push  URL: git@git.ec.pe:aptitus2.git
+	  HEAD branch: master
+	  Remote branches:
+	    antonio_match      tracked
+	    buscadorSolr       tracked
+	    cm1                tracked
+	    copy_master        tracked
+	    dev2c              tracked
+	    dev2d              tracked
+	    dev3               tracked
+	    error404           tracked
+	    est_tar            tracked
+	    issue#55712        tracked
+	    issues#56307       tracked
+	    issues#57687       tracked
+	    m1                 tracked
+	    master             tracked
+	    master2            tracked
+	    master_pe          tracked
+	    notify2            tracked
+	    pos                tracked
+	    pre                tracked
+	    pre2               tracked
+	    pre2b              tracked
+	    pre2c              tracked
+	    pre2d              tracked
+	    pre_60164_tildes   tracked
+	    pre_dominio        tracked
+	    prod#56655         tracked
+	    produccion         tracked
+	    proveedor-master   tracked
+	    proveedor-pre      tracked
+	    redisenio          tracked
+	    refactor           tracked
+	    registroNew        tracked
+	    release/v1.0       tracked
+	    releases           tracked
+	    seguridad          tracked
+	    solrAviso          tracked
+	    tarifas2014        tracked
+	    tarifas_membresias tracked
+	    token              tracked
+	    yoson              tracked
+	  Local branch configured for 'git pull':
+	    master merges with remote master
+	  Local ref configured for 'git push':
+	    master pushes to master (up to date)
+
+	[websync@web58 aptitus]$ git init
+
+	[websync@web58 aptitus]$ git remote add origen git@git.ec.pe:aptitus4.git
+		
+	[websync@web58 aptitus]$ git remote -v
+		origen	git@git.ec.pe:aptitus2.git (fetch)
+		origen	git@git.ec.pe:aptitus2.git (push)
+		You have mail in /var/spool/mail/websync
+
+	[websync@web58 dev.4.aptitus.com]$ git remote rm origen
+		You have mail in /var/spool/mail/websync
+
+	[websync@web58 dev.4.aptitus.com]$ git remote -v
+
+	[websync@web58 dev.4.aptitus.com]$ git remote add origen git@git.ec.pe:aptitus4.git
+
+	[websync@web58 dev.4.aptitus.com]$ git status
+		On branch master
+		nothing to commit, working directory clean
+
+[websync@web58 dev.4.aptitus.com]$ git add .
+You have mail in /var/spool/mail/websync
+
+[websync@web58 dev.4.aptitus.com]$ git commit -a -m "rama master4"
+On branch master
+nothing to commit, working directory clean
+
+[websync@web58 dev.4.aptitus.com]$ git push origen master
+Counting objects: 207390, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (55891/55891), done.
+Writing objects: 100% (207390/207390), 354.05 MiB | 10.48 MiB/s, done.
+Total 207390 (delta 140668), reused 204687 (delta 138437)
+To git@git.ec.pe:aptitus4.git
+ * [new branch]      master -> master
+You have mail in /var/spool/mail/websync
+
+[websync@web58 dev.4.aptitus.com]$ git remote show origen
+* remote origen
+  Fetch URL: git@git.ec.pe:aptitus4.git
+  Push  URL: git@git.ec.pe:aptitus4.git
+  HEAD branch: master
+  Remote branch:
+    master tracked
+  Local ref configured for 'git push':
+    master pushes to master (up to date)
+
+
+[websync@web58 aptitus]$ cd dev.4.aptitus.com/
+You have mail in /var/spool/mail/websync
+
+[websync@web58 dev.4.aptitus.com]$ git checkout -b dev4
+Switched to a new branch 'dev4'
+
+[websync@web58 dev.4.aptitus.com]$ git add .
+
+[websync@web58 dev.4.aptitus.com]$ git commit -a -m "nueva rama"
+On branch dev4
+nothing to commit, working directory clean
+
+[websync@web58 dev.4.aptitus.com]$ git push origen dev4
+Total 0 (delta 0), reused 0 (delta 0)
+To git@git.ec.pe:aptitus4.git
+ * [new branch]      dev4 -> dev4
+
+[websync@web58 dev.4.aptitus.com]$ 

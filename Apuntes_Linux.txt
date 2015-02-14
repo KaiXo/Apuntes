@@ -13,17 +13,121 @@ Convertir PDF en Libro para imprimir
 Trabajos de Memoria en Linux
 ============================
 
-Ver memoria disponible 
+Ver memoria disponible
 	free -m
 
-Libera Memoria 
-	sudo sync && sudo sysctl -w vm.drop_caches=3
+Libera Memoria
+===============
 
+	sudo sync && sudo sysctl -w vm.drop_caches=3
 
 
 
 Manejo de servicios
 ===================
 	sudo service apache start|stop|reload
-	 
-	
+
+
+Configuracion de PECL for apache
+================================
+
+	sudo apt-get install php-pear
+	sudo apt-get install php5-dev
+	sudo apt-get install libcurl3-openssl-dev
+	sudo apt-get install build-essential
+	sudo pecl install pecl_http
+
+		Una vez que hallas instalado todos los paquetes y dependencias, hay que editar “php.ini” y añadir la extensión http.so.
+		sudo nano /etc/php5/apache2/php.ini
+			Añadir la siguinete lenea
+				extension="uploadprogress.so"
+
+
+		sudo pecl install uploadprogress
+		Editas el archivo
+			sudo nano /etc/php5/apache2/conf.d/uploadprogress.ini
+			y  insertas las dos lineas
+				; activate and configurate for php uploadprogress module
+				extension=uploadprogress.so
+
+		Creas un enlace simbolico  en
+		sudo vim /etc/php5/mods-available/uploadprogress.ini
+		insertas
+			sudo ln -s /etc/php5/mods-available/uploadprogress.ini /etc/php5/apache2/conf.d/20-uploadprogress.ini
+
+	Finalmente reinicia apache para que los cambios se apliquen.
+
+	sudo service apache2 restart
+
+Ver cuanto ocupa la carpeta
+===========================
+
+	du -h --max-depth=1 /home/ruta | sort -n -r
+
+	Remover driver nvidia
+	======================
+
+	sudo apt-get remove --purge nvidia-*
+	sudo apt-get install ubuntu-desktop
+	sudo rm /etc/X11/xorg.conf
+	echo 'nouveau' | sudo tee -a /etc/modules
+
+Borrar tabla de particiones
+===========================
+	Lista disco duros  en PC y participones
+		sudo lsblk -fm 
+
+
+ Suponiendo que te lo haya enlazado a /dev/sdb ejecutamos
+
+	sudo fdisk /dev/sdb
+
+	con la tecla 'm' obtienes un menú de opciones
+
+	con la tecla 'p' lista la tabla de particiones actual
+
+	con la tecla 'd' vas eliminando las particiones
+
+	con la tecla 'n' creas nuevas particiones
+
+	con la tecla 'w' grabas los cambios ( realmente elimina y crea las particiones ) y sale de la aplicación
+
+	Suponiendo que hayas creado una sola partición para ext2, ahora vamos a formatearla
+
+	mke2fs /dev/sdb1
+
+	si quieres usar ext3 ( ext2 + journaling )
+
+	mke2fs -j /dev/sdb1 y tune2fs -c 0 /dev/sdb1 para que no corra un fsck cada cierto tiempo
+
+
+	Personalmente yo formatearía en vfat para que puedas intercambiar info con otros SO ( piensa que deberías crear la partición de tipo vfat en el paso inical del fdisk )
+
+	mkfs.vfat /dev/sdb1
+
+
+Comprimir carpeta y excluir carpetas
+====================================
+	tar czfv  2.neoauto.pe.tar.gz 2.neoauto.pe  --exclude "2.neoauto.pe/application/cron/*"
+
+
+Agregar usuarios y grupos en CentOS / RHEL
+===========================================
+
+Donde ahí se puede crear los grupos y usuarios en Linux.
+
+Pero si es mediante la línea de comandos, en el modo texto se tendría que crear un usuario de esta forma para agregar un usuario en CentOS o RHEL:
+
+	# useradd -s /bin/bash usuario-x
+	# passwd usuario-x
+	# smbpasswd -a usuario-x
+
+Para agregar grupos nuevos en Linux CentOS:
+
+		# groupadd -r grupo-X
+
+	Y para asignar un grupo creado a un usuario existente en el sistema operativo:
+
+		# gpasswd -a usuario-x grupo-X
+
+

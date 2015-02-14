@@ -1,0 +1,174 @@
+-u {usuario}
+-p (para que pida clave)
+-h {host}
+-P {port}
+
+Consulta SQl dar acceso a tablas de  una base de datos
+======================================================
+	GRANT SELECT ON houseonline.hol_ordenpublicaciondetalle TO 'usr_hol_ext'@'%' IDENTIFIED BY 'Xah1acah7AZiyi';
+
+
+Configurar el password de root
+==============================
+	mysqladmin -u root password PASSWORD_ELEGIDO
+
+Cambiar el password de root
+===========================
+	mysqladmin -u root -p123456 password 'xyz123'
+
+Chequear que el servidor MySQL esta activo
+==========================================
+	mysqladmin -u root -p ping
+		Enter password:
+		mysqld is alive
+
+Chequear que version de MySQL se esta ejecutando
+===============================================
+	mysqladmin -u root -p version
+
+Como conocer el estado actual del servidor
+===========================================
+	mysqladmin -u root -ptmppassword status
+
+
+Chequear el estado de las variables del servidor y sus valores
+==============================================================
+
+	mysqladmin -u root -p extended-status
+
+
+Chequear el estado de todas las variables del servidor MySQL
+============================================================
+
+	mysqladmin  -u root -p variables
+
+Ver todos los procesos que ejecuta el servidor MySQL
+====================================================
+	mysqladmin -u root -p processlist
+
+Como crear una base de datos
+============================
+	mysqladmin -u root -p create databasename
+
+Mostrar las bases de datos creadas (show databases).
+===================================================
+	mysql -u root -p
+	mysql> show databases;
+
+
+Borrar una base de datos existente
+==================================
+	mysqladmin -u root -p drop databasename
+
+
+Recargar/Refrescar los privilegios MySQL
+========================================
+	mysqladmin -u root -p reload;
+	mysqladmin -u root -p refresh
+
+Algunos comandos utiles para refrescar datos en MySQL
+=====================================================
+	flush-hosts: Refresca toda la informacion del cache que hostea MySQL.
+	flush-tables: Refresca todas las tablas.
+	flush-threads: Refresca los hilos de ejecucion.
+	flush-logs: Refresca todos los logs de informacion.
+	flush-privileges: Recarga las tablas de privilegios (lo mismo que recargar).
+	flush-status: Limpia el stado de las variables.
+
+	# mysqladmin -u root -p flush-hosts
+	# mysqladmin -u root -p flush-tables
+	# mysqladmin -u root -p flush-threads
+	# mysqladmin -u root -p flush-logs
+	# mysqladmin -u root -p flush-privileges
+	# mysqladmin -u root -p flush-status
+
+
+Matar un proceso cliente dormido
+================================
+	mysqladmin -u root -p processlist
+
+	Entonces ejecutamos el siguiente comando.
+		mysqladmin -u root -p kill 5
+	Si se necesita matar varios procesos, entonces le pasamos los ID's separados por comas.
+		mysqladmin -u root -p kill 5,10
+
+
+Ejecutar un comando en un servidor remoto
+=========================================
+	mysqladmin  -h 172.16.25.126 -u root -p status
+
+Iniciar/parar replica en un servidor remoto
+===========================================
+	mysqladmin  -u root -p start-slave
+
+	mysqladmin  -u root -p stop-slave
+
+Guardar informacion de debug en los logs
+========================================
+	mysqladmin  -u root -p debug
+
+
+Backup de Base de Datos
+=======================
+
+	mysqldump -h localhost -u mi_usuario -p base_datos > /home/rafalinux/backup/mi_base_$FECHA.sql
+
+
+Creacion de usuarios y asignacion de permisos
+====================
+
+	CREATE USER 'usr_apti4a_dev'@'localhost' IDENTIFIED BY 'joh4Naig3aiP7V';
+	GRANT ALL  PRIVILEGES ON db_aptitus4a_dev.* TO usr_apti4a_dev;
+
+
+Ver permisos de usuarios
+========================
+
+	mysql> select * from mysql.user;
+
+Permiso de usuario
+==================
+	mysql> show grants for user@'%'
+
+
+Eliminar Usuario
+================
+
+	mysql>drop user user@'%';
+
+Ver/Listar Stored Procedures en MySQL
+=====================================
+​
+​	Para ver si hay stored procedures en nuestra base de datos, podemos ejecutar el siguiente comando desde la línea de comandos:
+
+	show procedure status;
+
+
+
+Ejemplos de Mysql Agregar Usuario
+=================================
+
+	create database db_aptitus4a_pre;
+	GRANT USAGE ON *.* TO 'usr_aptitus4a_pre'@'%' IDENTIFIED BY 'ntK0Myps7LidswY';
+	GRANT ALL PRIVILEGES ON `db_aptitus4a_pre`.* TO 'usr_aptitus4_pre'@'%';
+	GRANT SELECT ON `db_aptitus4a_pre`.* TO 'usr_aptitus4a_pre'@'%';
+	flush privileges;
+	quit
+
+
+
+	create database db_aptitus4a_dev;
+	GRANT USAGE ON *.* TO 'usr_aptitus4a_dev'@'%' IDENTIFIED BY 'ntK0Myps7LidswY';
+	GRANT ALL PRIVILEGES ON `db_aptitus4a_dev`.* TO 'usr_aptitus4_dev'@'%';
+	GRANT SELECT ON `db_aptitus4a_dev`.* TO 'usr_aptitus4a_dev'@'%';
+	flush privileges;
+
+
+
+	mysqldump -h localhost -u root dev_aptitus2db > /tmp/de_aptitus2db_$FECHA.sql
+
+
+
+	Borrar un usuario
+	=================
+		mysql>drop user user@'%';
