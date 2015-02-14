@@ -2,6 +2,7 @@ Descarga de Videos desde Consola
 ================================
 	youtube-dl -F <dirección web> ---> lista formatos y calidad de video a descargas
 
+	youtube-dl -t -f <No> <direccion web>
 
 
 Convertir PDF en Libro para imprimir
@@ -20,3 +21,9 @@ Libera Memoria
 
 
 
+
+Manejo de servicios
+===================
+	sudo service apache start|stop|reload
+	 
+	
