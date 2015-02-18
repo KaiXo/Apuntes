@@ -55,11 +55,11 @@ Mover Archivos entre servisores por FTP
 
 	SUBIR DE UN SERVIDOR AL FTP
 	destino en el ftp        origen en tu server
-	ncftpput -R -u infraestructura -p IcQ6R70wguHdDiC ftp.e3.pe /PlataformaDigital/bkp/ /apps/neoauto/2.neoauto.pe.tar.gz
+	ncftpput -R -u user -p XXXXXXXXXX ftp.e3.pe /PlataformaDigital/bkp/ /apps/carpeta/archivo.tar.gz
 
 	BAJAR DEL FTP A UN SERVIDOR
 	destino en tu server origen en el ftp
-	ncftpget -R -u infraestructura -p IcQ6R70wguHdDiC ftp.e3.pe  /apps/neoauto/   /PlataformaDigital/bkp/2.neoauto.pe.tar.gz
+	ncftpget -R -u user -p XXXXXXXXXXXXX ftp.e3.pe  /apps/carpeta/   /bkp/archivo.tar.gz
 
 
 Despliegue de Ambiente a Produccion
@@ -68,7 +68,7 @@ Despliegue de Ambiente a Produccion
 	Cambiar a usuario: su - websync 
 	revisar el bash
 		vim /usr/local/scripts/unt.sh  --> revisar el ambiente a desplegar
-		vim /usr/local/scripts/unt.sh aptitus.pe
+		vim /usr/local/scripts/unt.sh web.pe
 
 Activar COnsumidores 
 ====================
@@ -81,12 +81,12 @@ Activar COnsumidores
 Copiar archivos por SCP
 ======================
 
-scp -i $HOME/llaves/aws.pem root@184.72.135.173:/root/ini.web01.tar.gz
+scp -i $HOME/llaves/llave.pem root@xxx.xxx.xxx.xx:/root/ini.web01.tar.gz
 
-./U web27 /tmp/llavez.zip  /tmp/
+./U web27 /tmp/tu_llavez.zip  /tmp/
 
 
-scp -i $HOME/aws.pem root@184.72.135.173:/apps/aptitus/pre.4.aptitus.tar.gz
+scp -i $HOME/llave.pem root@xxx.xxx.xxx:/apps/aptitus/pre.4.archivo.tar.gz
 
 
 Ejecucion de Cron
@@ -108,7 +108,7 @@ Uso de Screen
 		screen -R nombre_cron
 
 	Uso de screen
-		/usr/local/zend/bin/php /apps/urbania/pre.3.urbania.pe/src/public/index.php cron sitemap buscador 16 > buscador.txt -->'guarda todo lo realizado en el comando'
+		/usr/local/zend/bin/php /apps/proyecto/pre.3.proyecto.pe/src/public/index.php cron sitemap buscador 16 > buscador.txt -->'guarda todo lo realizado en el comando'
 
 Amplir rando de peticiones
 --------------------------
