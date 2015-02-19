@@ -117,7 +117,7 @@ Backup de Base de Datos
 Creacion de usuarios y asignacion de permisos
 ====================
 
-	CREATE USER 'usr_apti4a_dev'@'localhost' IDENTIFIED BY 'joh4Naig3aiP7V';
+	CREATE USER 'usr_apti4a_dev'@'localhost' IDENTIFIED BY 'XXXXXXXXXXXX';
 	GRANT ALL  PRIVILEGES ON db_aptitus4a_dev.* TO usr_apti4a_dev;
 
 
@@ -138,8 +138,8 @@ Eliminar Usuario
 
 Ver/Listar Stored Procedures en MySQL
 =====================================
-​
-​	Para ver si hay stored procedures en nuestra base de datos, podemos ejecutar el siguiente comando desde la línea de comandos:
+
+	Para ver si hay stored procedures en nuestra base de datos, podemos ejecutar el siguiente comando desde la línea de comandos:
 
 	show procedure status;
 
@@ -149,18 +149,18 @@ Ejemplos de Mysql Agregar Usuario
 =================================
 
 	create database db_aptitus4a_pre;
-	GRANT USAGE ON *.* TO 'usr_aptitus4a_pre'@'%' IDENTIFIED BY 'ntK0Myps7LidswY';
+	GRANT USAGE ON *.* TO 'usr_aptits_pre'@'%' IDENTIFIED BY 'XXXXXXxXXXXXXXXX';
 	GRANT ALL PRIVILEGES ON `db_aptitus4a_pre`.* TO 'usr_aptitus4_pre'@'%';
-	GRANT SELECT ON `db_aptitus4a_pre`.* TO 'usr_aptitus4a_pre'@'%';
+	GRANT SELECT ON `db_aptits_pre`.* TO 'usr_aptits_pre'@'%';
 	flush privileges;
 	quit
 
 
 
 	create database db_aptitus4a_dev;
-	GRANT USAGE ON *.* TO 'usr_aptitus4a_dev'@'%' IDENTIFIED BY 'ntK0Myps7LidswY';
+	GRANT USAGE ON *.* TO 'usr_aptits_dev'@'%' IDENTIFIED BY 'XXXXXXXXXXXXXXXX';
 	GRANT ALL PRIVILEGES ON `db_aptitus4a_dev`.* TO 'usr_aptitus4_dev'@'%';
-	GRANT SELECT ON `db_aptitus4a_dev`.* TO 'usr_aptitus4a_dev'@'%';
+	GRANT SELECT ON `db_aptits_dev`.* TO 'usr_aptits_dev'@'%';
 	flush privileges;
 
 

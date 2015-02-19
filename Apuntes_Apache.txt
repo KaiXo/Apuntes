@@ -17,3 +17,49 @@ Modulos cargados en Apache
 Host Virtuales en tu apache
 ===========================
 	httpd -S
+
+
+
+
+
++---------------------------------------------------------------------------------------------+
+Creando un entorno de Web en Apache-Basico
+
+Crear carpeta nombre del projecto 
+$ mkdir  d7taller
+
+Creando un enlace simbólico
+$ sudo ln -s /home/angel/Documents/pry/d7taller/ /var/www/d7taller
+	
+Creando configuración de host
+$ sudo cp /etc/apache2/sites-available/default /etc/apache2/sites-available/d7taller
+
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerAlias d7taller
+        DocumentRoot /var/www/d7taller
+        <Directory /var/www/d7taller>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error-d7.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog ${APACHE_LOG_DIR}/access-d7.log combined
+</VirtualHost>
+
+Activando nueva configuración
+$ sudo a2ensite d7taller
+$ sudo service apache2 reload
+
+Editar Hosts 
+$ sudo nano /etc/hosts -->agregamos 
+ 127.0.0.1 d7taller
+
++------------------------------------------------------------------------------------------------+
