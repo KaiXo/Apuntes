@@ -1,1 +1,29 @@
 /.project
+
+[alias]
+    co = checkout
+    st = status
+    lg = log --pretty=format:'%h - %an, %ar : %s' --graph
+[core]
+    editor = subl -w
+
+[user]
+        name = David E. Cruz Herrada
+        email = dacruz132@gmail.com
+[color]
+        ui = true
+        status = auto
+        log = auto
+        diff = auto
+        branch = auto
+        interactive = auto
+        pager = true
+
+[color "status"]
+  added = green
+  changed = red bold
+  untracked = magenta bold
+
+[color "branch"]
+  remote = yellow
+~                          
