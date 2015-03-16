@@ -19,9 +19,6 @@ Host Virtuales en tu apache
 	httpd -S
 
 
-
-
-
 +---------------------------------------------------------------------------------------------+
 Creando un entorno de Web en Apache-Basico
 

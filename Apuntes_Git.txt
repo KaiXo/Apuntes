@@ -35,7 +35,6 @@ Probando Conexion
 	ssh -T git@github.com
 
 
-
 Fusion de ramas
 ===============
 	1. Moverser a la rama principal
@@ -67,14 +66,14 @@ Conexion con Repositorio Remoto
 Ver conexion de Repositorios
 ============================
 
-	origin http://ruta_de_tu_repositorio (fetch)
-	origin http://ruta_de_tu_repositorio (push)
+    origin http://ruta_de_tu_repositorio (fetch)
+    origin http://ruta_de_tu_repositorio (push)
 
 Sincronicacion de Repositorios  local a remoto
 ==================================================================
 
-		git push origin master
-		donde "master" es la rama principal del proyecto
+	git push origin master
+	donde "master" es la rama principal del proyecto
 
 
 Sincronicacion de Remoto Local
@@ -95,7 +94,6 @@ Ver rama oculta de remoto en tu PC
 Seguimiento de Ramas en Git
 ===========================
 	git log --pretty=format:"%h - %an - %ar - %s" --graph
-
 
 
 git reset --hard HEAD 
